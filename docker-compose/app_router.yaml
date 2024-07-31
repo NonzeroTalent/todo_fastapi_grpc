@@ -1,0 +1,35 @@
+  version: '3.9'
+
+  # upping the fastapi router
+
+  services:
+    fast_api_router:
+      env_file: docker-env.env
+      container_name: fastapi_router
+      hostname: fastapi_router
+      build:
+        context: ../gateway
+        dockerfile: Dockerfile
+  #    command: uvicorn --factory gateway.api.app:create_fastapi_app --reload --host 0.0.0.0 --port 8000
+#      && python -m grpc_tools.protoc -I ./gateway/protos --python_out=./gateway/protos --grpc_python_out=./gateway/protos todo.proto
+      #&& python -m grpc_tools.protoc -I ./gateway/protos/ --python_out=./gateway/protos/ --grpc_python_out=./gateway/protos/ todo.proto
+
+      command: bash -c "
+        uvicorn --factory gateway.api.app:create_fastapi_app --reload --host 0.0.0.0 --port 8000 
+        && python -m grpc_tools.protoc -I gateway/protos/ --python_out=gateway/protos/ --grpc_python_out=gateway/protos/ todo.proto
+        "
+      ports:
+        - "8000:8000"
+      volumes:
+        - ../gateway:/app/gateway
+      depends_on:
+        - todo_grpc_server
+      networks:
+        - proxy_backend_network
+
+
+  networks:
+    proxy_backend_network:
+      external: true
+      name: todo_backend_network
+      driver: bridge

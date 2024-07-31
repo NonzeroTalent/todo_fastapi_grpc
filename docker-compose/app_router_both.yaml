@@ -1,0 +1,48 @@
+  version: '3.9'
+
+  # upping the fastapi router
+
+  services:
+    fast_api_router:
+      env_file: docker-env.env
+      container_name: fastapi_router
+      build:
+        context: ../gateway
+        dockerfile: Dockerfile
+  #    command: uvicorn --factory gateway.api.app:create_fastapi_app --reload --host 0.0.0.0 --port 8000
+#      && python -m grpc_tools.protoc -I ./gateway/protos --python_out=./gateway/protos --grpc_python_out=./gateway/protos todo.proto
+      #&& python -m grpc_tools.protoc -I ./gateway/protos/ --python_out=./gateway/protos/ --grpc_python_out=./gateway/protos/ todo.proto
+
+      command: bash -c "
+        uvicorn --factory gateway.api.app:create_fastapi_app --reload --host 0.0.0.0 --port 8000 
+        && python -m grpc_tools.protoc -I gateway/protos/ --python_out=gateway/protos/ --grpc_python_out=gateway/protos/ todo.proto
+        "
+      ports:
+        - "8000:8000"
+      volumes:
+        - ../gateway:/app/gateway
+      networks:
+        - backend_network
+    todo_grpc_server:
+      env_file: docker-env.env
+      container_name: todo_grpc_server
+      build:
+        context: ../todo_service
+        dockerfile: Dockerfile
+      #    command: bash -c "
+      #      python -m grpc_tools.protoc -I ./protos --python_out=./protos --grpc_python_out=./protos todo.proto
+      #      && python todo_grpc_server.py
+      #      "
+      command: bash -c "
+        python -m grpc_tools.protoc -I todo_service/protos/ --python_out=todo_service/protos/ --grpc_python_out=todo_service/protos/ todo.proto
+        && python todo_service/todo_grpc_server.py
+        "
+      ports:
+        - "50006:50006"
+      volumes:
+        - ../todo_service:/app/todo_service
+      networks:
+        - backend_network
+  networks:
+    backend_network:
+      driver: bridge

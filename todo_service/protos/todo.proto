@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package todo;
+
+//import "google/protobuf/wrappers.proto";
+
+message Todo {
+  uint64 id = 1;
+  string name = 2;
+  bool completed = 3;
+  uint64 day = 4;
+}
+
+message CreateTodoRequest{
+  string name = 1;
+  bool completed = 2;
+  uint64 day = 3;
+}
+
+message CreateTodoResponse{
+  Todo todo = 1;
+}
+
+message ListTodosRequest{
+}
+
+message ListTodosResponse{
+  repeated Todo todos = 1;
+}
+
+message GetTodoRequest{
+  uint64 id = 1;
+}
+
+message GetTodoResponse{
+  Todo todo = 1;
+}
+message DeleteTodoRequest{
+  uint64 id = 1;
+}
+
+message DeleteTodoResponse{
+  bool success = 1;
+}
+
+message UpdateTodoRequest {
+  uint64 id = 1;
+  string name = 2;
+  bool completed = 3;
+  uint64 day = 4;
+}
+
+message UpdateTodoResponse{
+  Todo todo = 1;
+}
+
+service TodoService{
+  rpc create_todo_item(CreateTodoRequest) returns (CreateTodoResponse);
+  rpc list_todo_items(ListTodosRequest) returns (ListTodosResponse);
+  rpc get_todo_item(GetTodoRequest) returns (GetTodoResponse);
+  rpc delete_todo_item(DeleteTodoRequest) returns (DeleteTodoResponse);
+  rpc update_todo_item(UpdateTodoRequest) returns (UpdateTodoResponse);
+}

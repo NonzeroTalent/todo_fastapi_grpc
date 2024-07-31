@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "todo-gateway"
+version = "0.1.0"
+description = ""
+authors = ["Talant <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+grpcio = "^1.65.1"
+grpcio-tools = "^1.65.1"
+uvicorn = "^0.30.3"
+fastapi = "^0.111.1"
+pydantic-settings = "^2.3.4"
+django-environ = "^0.11.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

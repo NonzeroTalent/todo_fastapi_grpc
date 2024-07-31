@@ -1,19 +1,21 @@
-import grpc
-from protos import todo_pb2
-from typing import Any, List
+import sys
+from typing import Any
 from grpc.aio._call import AioRpcError
 from fastapi.responses import JSONResponse
 from google.protobuf.json_format import MessageToDict
-from grpc_clients.todo_client import get_gprc_todo_client
-from fastapi import APIRouter, Depends, status, HTTPException
+from gateway.grpc_clients.todo_client import get_gprc_todo_client
+from fastapi import APIRouter, Depends, HTTPException
 
+# from gateway.protos import todo_pb2
+sys.path.append("/app/gateway/protos")
+import todo_pb2
 
 todo_router = APIRouter()
 
 
 @todo_router.get("/")
 async def ping():
-    return {"nigg": "er"}
+    return {"testing": "sucksess"}
 
 
 @todo_router.post("/todo")
@@ -41,7 +43,8 @@ async def list_todos(client: Any = Depends(get_gprc_todo_client)):
     try:
         todos = await client.list_todo_items(todo_pb2.ListTodosRequest(), timeout=5)
     except AioRpcError as err:
-        raise HTTPException(status_code=404, detail=err.details())
+        # raise HTTPException(status_code=404, detail=err.details())
+        raise HTTPException(status_code=404, detail=err.debug_error_string())
     return JSONResponse(MessageToDict(todos))
 
 @todo_router.get("/todo")

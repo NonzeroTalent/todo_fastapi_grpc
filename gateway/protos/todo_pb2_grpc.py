@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-from protos import todo_pb2 as protos_dot_todo__pb2
+import todo_pb2 as todo__pb2
 
 GRPC_GENERATED_VERSION = '1.65.1'
 GRPC_VERSION = grpc.__version__
@@ -20,7 +20,7 @@ except ImportError:
 if _version_not_supported:
     warnings.warn(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in protos/todo_pb2_grpc.py depends on'
+        + f' but the generated code in todo_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
@@ -41,28 +41,28 @@ class TodoServiceStub(object):
         """
         self.create_todo_item = channel.unary_unary(
                 '/todo.TodoService/create_todo_item',
-                request_serializer=protos_dot_todo__pb2.CreateTodoRequest.SerializeToString,
-                response_deserializer=protos_dot_todo__pb2.CreateTodoResponse.FromString,
+                request_serializer=todo__pb2.CreateTodoRequest.SerializeToString,
+                response_deserializer=todo__pb2.CreateTodoResponse.FromString,
                 _registered_method=True)
         self.list_todo_items = channel.unary_unary(
                 '/todo.TodoService/list_todo_items',
-                request_serializer=protos_dot_todo__pb2.ListTodosRequest.SerializeToString,
-                response_deserializer=protos_dot_todo__pb2.ListTodosResponse.FromString,
+                request_serializer=todo__pb2.ListTodosRequest.SerializeToString,
+                response_deserializer=todo__pb2.ListTodosResponse.FromString,
                 _registered_method=True)
         self.get_todo_item = channel.unary_unary(
                 '/todo.TodoService/get_todo_item',
-                request_serializer=protos_dot_todo__pb2.GetTodoRequest.SerializeToString,
-                response_deserializer=protos_dot_todo__pb2.GetTodoResponse.FromString,
+                request_serializer=todo__pb2.GetTodoRequest.SerializeToString,
+                response_deserializer=todo__pb2.GetTodoResponse.FromString,
                 _registered_method=True)
         self.delete_todo_item = channel.unary_unary(
                 '/todo.TodoService/delete_todo_item',
-                request_serializer=protos_dot_todo__pb2.DeleteTodoRequest.SerializeToString,
-                response_deserializer=protos_dot_todo__pb2.DeleteTodoResponse.FromString,
+                request_serializer=todo__pb2.DeleteTodoRequest.SerializeToString,
+                response_deserializer=todo__pb2.DeleteTodoResponse.FromString,
                 _registered_method=True)
         self.update_todo_item = channel.unary_unary(
                 '/todo.TodoService/update_todo_item',
-                request_serializer=protos_dot_todo__pb2.UpdateTodoRequest.SerializeToString,
-                response_deserializer=protos_dot_todo__pb2.UpdateTodoResponse.FromString,
+                request_serializer=todo__pb2.UpdateTodoRequest.SerializeToString,
+                response_deserializer=todo__pb2.UpdateTodoResponse.FromString,
                 _registered_method=True)
 
 
@@ -104,28 +104,28 @@ def add_TodoServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'create_todo_item': grpc.unary_unary_rpc_method_handler(
                     servicer.create_todo_item,
-                    request_deserializer=protos_dot_todo__pb2.CreateTodoRequest.FromString,
-                    response_serializer=protos_dot_todo__pb2.CreateTodoResponse.SerializeToString,
+                    request_deserializer=todo__pb2.CreateTodoRequest.FromString,
+                    response_serializer=todo__pb2.CreateTodoResponse.SerializeToString,
             ),
             'list_todo_items': grpc.unary_unary_rpc_method_handler(
                     servicer.list_todo_items,
-                    request_deserializer=protos_dot_todo__pb2.ListTodosRequest.FromString,
-                    response_serializer=protos_dot_todo__pb2.ListTodosResponse.SerializeToString,
+                    request_deserializer=todo__pb2.ListTodosRequest.FromString,
+                    response_serializer=todo__pb2.ListTodosResponse.SerializeToString,
             ),
             'get_todo_item': grpc.unary_unary_rpc_method_handler(
                     servicer.get_todo_item,
-                    request_deserializer=protos_dot_todo__pb2.GetTodoRequest.FromString,
-                    response_serializer=protos_dot_todo__pb2.GetTodoResponse.SerializeToString,
+                    request_deserializer=todo__pb2.GetTodoRequest.FromString,
+                    response_serializer=todo__pb2.GetTodoResponse.SerializeToString,
             ),
             'delete_todo_item': grpc.unary_unary_rpc_method_handler(
                     servicer.delete_todo_item,
-                    request_deserializer=protos_dot_todo__pb2.DeleteTodoRequest.FromString,
-                    response_serializer=protos_dot_todo__pb2.DeleteTodoResponse.SerializeToString,
+                    request_deserializer=todo__pb2.DeleteTodoRequest.FromString,
+                    response_serializer=todo__pb2.DeleteTodoResponse.SerializeToString,
             ),
             'update_todo_item': grpc.unary_unary_rpc_method_handler(
                     servicer.update_todo_item,
-                    request_deserializer=protos_dot_todo__pb2.UpdateTodoRequest.FromString,
-                    response_serializer=protos_dot_todo__pb2.UpdateTodoResponse.SerializeToString,
+                    request_deserializer=todo__pb2.UpdateTodoRequest.FromString,
+                    response_serializer=todo__pb2.UpdateTodoResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -153,8 +153,8 @@ class TodoService(object):
             request,
             target,
             '/todo.TodoService/create_todo_item',
-            protos_dot_todo__pb2.CreateTodoRequest.SerializeToString,
-            protos_dot_todo__pb2.CreateTodoResponse.FromString,
+            todo__pb2.CreateTodoRequest.SerializeToString,
+            todo__pb2.CreateTodoResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -180,8 +180,8 @@ class TodoService(object):
             request,
             target,
             '/todo.TodoService/list_todo_items',
-            protos_dot_todo__pb2.ListTodosRequest.SerializeToString,
-            protos_dot_todo__pb2.ListTodosResponse.FromString,
+            todo__pb2.ListTodosRequest.SerializeToString,
+            todo__pb2.ListTodosResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -207,8 +207,8 @@ class TodoService(object):
             request,
             target,
             '/todo.TodoService/get_todo_item',
-            protos_dot_todo__pb2.GetTodoRequest.SerializeToString,
-            protos_dot_todo__pb2.GetTodoResponse.FromString,
+            todo__pb2.GetTodoRequest.SerializeToString,
+            todo__pb2.GetTodoResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -234,8 +234,8 @@ class TodoService(object):
             request,
             target,
             '/todo.TodoService/delete_todo_item',
-            protos_dot_todo__pb2.DeleteTodoRequest.SerializeToString,
-            protos_dot_todo__pb2.DeleteTodoResponse.FromString,
+            todo__pb2.DeleteTodoRequest.SerializeToString,
+            todo__pb2.DeleteTodoResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -261,8 +261,8 @@ class TodoService(object):
             request,
             target,
             '/todo.TodoService/update_todo_item',
-            protos_dot_todo__pb2.UpdateTodoRequest.SerializeToString,
-            protos_dot_todo__pb2.UpdateTodoResponse.FromString,
+            todo__pb2.UpdateTodoRequest.SerializeToString,
+            todo__pb2.UpdateTodoResponse.FromString,
             options,
             channel_credentials,
             insecure,

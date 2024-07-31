@@ -1,0 +1,32 @@
+version: '3.9'
+
+# upping the fastapi router
+
+services:
+  todo_grpc_server:
+    env_file: docker-env.env
+    container_name: todo_grpc_server
+    hostname: todo_grpc_server
+
+    build:
+      context: ../todo_service
+      dockerfile: Dockerfile
+#    command: bash -c "
+#      python -m grpc_tools.protoc -I ./protos --python_out=./protos --grpc_python_out=./protos todo.proto
+#      && python todo_grpc_server.py
+#      "
+    command: bash -c "
+        python -m grpc_tools.protoc -I todo_service/protos/ --python_out=todo_service/protos/ --grpc_python_out=todo_service/protos/ todo.proto
+        && python todo_service/todo_grpc_server.py
+      "
+    ports:
+      - "50006:50006"
+    volumes:
+      - ../todo_service:/app/todo_service
+    networks:
+      - backend_network
+
+networks:
+  backend_network:
+    name: todo_backend_network
+    driver: bridge

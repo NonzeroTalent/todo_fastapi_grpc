@@ -1,8 +1,12 @@
 from grpc import aio
 
-from protos import todo_pb2
+from todo_service.models.todo_model import Todo
+
+import sys
+
 from protos import todo_pb2_grpc
-from models.todo_model import Todo
+from protos import todo_pb2
+
 
 
 class TodoService(todo_pb2_grpc.TodoServiceServicer):
@@ -43,7 +47,8 @@ async def run_todo_service(address):
         TodoService(),
         server
     )
-    server.add_insecure_port(address)
+    # server.add_insecure_port(address)
+    server.add_insecure_port("[::]:50006")
     print(f"Running todo service on {address}")
     await server.start()
     await server.wait_for_termination()
